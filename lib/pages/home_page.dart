@@ -263,7 +263,13 @@ class HomePage extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
                 } else if (snapshot.hasError) {
-                  return Text('Data nya gabisa diambil');
+                  String errorMessage = 'An error occurred';
+                  if (snapshot.error is String) {
+                    errorMessage = snapshot.error.toString();
+                  } else if (snapshot.error is Exception) {
+                    errorMessage = snapshot.error.toString();
+                  }
+                  return Text('Error: $errorMessage');
                 } else {
                   List<Product> products = snapshot.data!;
                   return Container(
@@ -273,6 +279,7 @@ class HomePage extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: products.length,
                       itemBuilder: (BuildContext context, int index) {
+                        Product product = products[index];
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -285,7 +292,7 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           child: ProductItem(
-                            product: products[index],
+                            product: product,
                           ),
                         );
                       },
