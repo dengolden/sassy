@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sassy/models/product.dart';
+import 'package:sassy/pages/detail_page.dart';
+import 'package:sassy/service/api_service.dart';
 import 'package:sassy/shared/theme.dart';
 import 'package:sassy/widgets/custom_circle_button.dart';
 import 'package:sassy/widgets/product_item.dart';
@@ -20,20 +23,16 @@ class HomePage extends StatelessWidget {
           children: [
             CustomCircleButton(
               imageUrl: 'assets/burger_menu.png',
-              iconWidth: 20,
-              iconHeight: 20,
             ),
             Text(
               'SASSY.',
               style: semiBoldTextStyle.copyWith(
-                fontSize: 20,
+                fontSize: 25,
                 color: blackColor,
               ),
             ),
             CustomCircleButton(
               imageUrl: 'assets/bell_icon.png',
-              iconWidth: 20,
-              iconHeight: 20,
             )
           ],
         ),
@@ -177,24 +176,49 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ProductItem(
-                    imageUrl: 'assets/product_1.png',
-                    title: 'Classic Grey Hooded\nSweatshirt',
-                    category: 'Clothes',
-                    price: 90,
-                  ),
-                  ProductItem(
-                    imageUrl: 'assets/product_2.png',
-                    title: 'Classic Blue Baseball\nCap',
-                    category: 'Clothes',
-                    price: 86,
-                  ),
-                ],
-              ),
+            FutureBuilder<List<Product>>(
+              future: ProductService.fetchProducts(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  String errorMessage = 'An error occurred';
+                  if (snapshot.error is String) {
+                    errorMessage = snapshot.error.toString();
+                  } else if (snapshot.error is Exception) {
+                    errorMessage = snapshot.error.toString();
+                  }
+                  return Text('Error: $errorMessage');
+                } else {
+                  List<Product> products = snapshot.data!;
+                  return Container(
+                    height: 255,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: products.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Product product = products[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPage(
+                                  product: products[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: ProductItem(
+                            product: product,
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),
@@ -233,24 +257,42 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ProductItem(
-                    imageUrl: 'assets/product_1.png',
-                    title: 'Classic Grey Hooded\nSweatshirt',
-                    category: 'Clothes',
-                    price: 90,
-                  ),
-                  ProductItem(
-                    imageUrl: 'assets/product_2.png',
-                    title: 'Classic Blue Baseball\nCap',
-                    category: 'Clothes',
-                    price: 86,
-                  ),
-                ],
-              ),
+            FutureBuilder<List<Product>>(
+              future: ProductService.fetchProducts(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Data nya gabisa diambil');
+                } else {
+                  List<Product> products = snapshot.data!;
+                  return Container(
+                    height: 255,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: products.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPage(
+                                  product: products[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: ProductItem(
+                            product: products[index],
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),

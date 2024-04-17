@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:sassy/pages/cart_page.dart';
+import 'package:sassy/models/product.dart';
 import 'package:sassy/shared/theme.dart';
 import 'package:sassy/widgets/custom_circle_button.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key});
+  final Product product;
+
+  const DetailPage({required this.product});
 
   @override
   Widget build(BuildContext context) {
+    Widget detailImage() {
+      return Container(
+        width: double.infinity,
+        height: 420,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(product.images[0]),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
           left: 30,
           right: 30,
-          top: 10,
+          top: 60,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,48 +37,11 @@ class DetailPage extends StatelessWidget {
               onTap: () => Navigator.pop(context),
               child: CustomCircleButton(
                 imageUrl: 'assets/back_icon.png',
-                iconWidth: 22,
-                iconHeight: 22,
-              ),
-            ),
-            Text(
-              'Details Product',
-              style: semiBoldTextStyle.copyWith(
-                fontSize: 20,
-                color: blackColor,
               ),
             ),
             CustomCircleButton(
               imageUrl: 'assets/heart_icon.png',
-              iconWidth: 22,
-              iconHeight: 22,
             )
-          ],
-        ),
-      );
-    }
-
-    Widget detailImage() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: 40,
-          left: 30,
-          right: 30,
-        ),
-        width: double.infinity,
-        height: 291,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17),
-          image: DecorationImage(
-            image: AssetImage('assets/product_1.png'),
-            fit: BoxFit.cover,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              offset: Offset(0, 4),
-              blurRadius: 6,
-            ),
           ],
         ),
       );
@@ -72,7 +50,7 @@ class DetailPage extends StatelessWidget {
     Widget description() {
       return Container(
         margin: EdgeInsets.only(
-          top: 52,
+          top: 370,
         ),
         padding: EdgeInsets.symmetric(horizontal: 25),
         width: double.infinity,
@@ -88,7 +66,7 @@ class DetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Classic Grey Hooded\nSweatshirt',
+                product.title,
                 style: mediumTextStyle.copyWith(
                   fontSize: 22,
                   color: blackColor,
@@ -96,7 +74,7 @@ class DetailPage extends StatelessWidget {
               ),
               SizedBox(height: 12),
               Text(
-                'Clothes',
+                product.category.name.toString().split('.').last,
                 style: lightTextStyle.copyWith(
                   color: greyColor,
                 ),
@@ -111,7 +89,7 @@ class DetailPage extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    '\$90',
+                    '\$${product.price}',
                     style: mediumTextStyle.copyWith(
                       fontSize: 30,
                       color: blackColor,
@@ -174,20 +152,15 @@ class DetailPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CartPage(),
-                      ),
+                  Container(
+                    width: 220,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: greenColor,
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    child: Container(
-                      width: 220,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: greenColor,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                    child: TextButton(
+                      onPressed: () {},
                       child: Center(
                         child: Text(
                           'Add to Cart',
@@ -212,16 +185,13 @@ class DetailPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        bottom: false,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              header(),
-              detailImage(),
-              description(),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            detailImage(),
+            header(),
+            description(),
+          ],
         ),
       ),
     );

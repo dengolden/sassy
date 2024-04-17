@@ -8,15 +8,15 @@ class CustomCircleButton extends StatelessWidget {
 
   const CustomCircleButton({
     required this.imageUrl,
-    required this.iconWidth,
-    required this.iconHeight,
+    this.iconWidth = 25,
+    this.iconHeight = 25,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 30,
-      height: 30,
+      width: 40,
+      height: 40,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: whiteColor,

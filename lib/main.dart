@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sassy/pages/cart_page.dart';
-import 'package:sassy/pages/detail_page.dart';
 import 'package:sassy/pages/main_page.dart';
 import 'package:sassy/pages/splash_page.dart';
 
@@ -18,7 +17,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => SplashPage(),
         '/main': (context) => MainPage(),
-        '/detail': (context) => DetailPage(),
         '/cart': (context) => CartPage(),
       },
     );
