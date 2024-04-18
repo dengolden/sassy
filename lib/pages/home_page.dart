@@ -182,12 +182,7 @@ class HomePage extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
                 } else if (snapshot.hasError) {
-                  String errorMessage = 'An error occurred';
-                  if (snapshot.error is String) {
-                    errorMessage = snapshot.error.toString();
-                  } else if (snapshot.error is Exception) {
-                    errorMessage = snapshot.error.toString();
-                  }
+                  String errorMessage = snapshot.error.toString();
                   return Text('Error: $errorMessage');
                 } else {
                   List<Product> products = snapshot.data!;

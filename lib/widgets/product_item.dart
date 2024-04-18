@@ -29,7 +29,6 @@ class ProductItem extends StatelessWidget {
               image: DecorationImage(
                 image: NetworkImage(product.images[0]),
                 fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
               ),
             ),
           ),
@@ -50,7 +49,7 @@ class ProductItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  product.category.name.toString().split('.').last,
+                  product.category.name,
                   style: lightTextStyle.copyWith(
                     fontSize: 12,
                     color: greyColor,

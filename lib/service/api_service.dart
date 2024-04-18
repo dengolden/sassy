@@ -8,9 +8,12 @@ class ProductService {
         await http.get(Uri.parse('https://api.escuelajs.co/api/v1/products'));
 
     if (response.statusCode == 200) {
+      //json.decode() => konversi json ke objek dart
       List<dynamic> data = json.decode(response.body);
+      //Mapping dari variabel data yang menghasilkan List object Product
       return data.map((json) => Product.fromJson(json)).toList();
     } else {
+      // Gagal mengambil data
       throw Exception('Failed to load products');
     }
   }

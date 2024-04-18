@@ -74,7 +74,7 @@ class DetailPage extends StatelessWidget {
               ),
               SizedBox(height: 12),
               Text(
-                product.category.name.toString().split('.').last,
+                product.category.name,
                 style: lightTextStyle.copyWith(
                   color: greyColor,
                 ),
@@ -101,7 +101,7 @@ class DetailPage extends StatelessWidget {
                 height: 31,
               ),
               Text(
-                'Step into style with these eye-catching sneakers featuring a striking combination of orange and blue hues. Designed for both comfort and fashion',
+                product.description,
                 style: regularTextStyle.copyWith(
                   color: greyColor,
                 ),
