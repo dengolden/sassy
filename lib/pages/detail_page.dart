@@ -92,7 +92,7 @@ class DetailPage extends StatelessWidget {
                     '\$${product.price}',
                     style: mediumTextStyle.copyWith(
                       fontSize: 30,
-                      color: blackColor,
+                      color: whiteColor,
                     ),
                   ),
                 ),
@@ -166,7 +166,7 @@ class DetailPage extends StatelessWidget {
                           'Add to Cart',
                           style: semiBoldTextStyle.copyWith(
                             fontSize: 18,
-                            color: blackColor,
+                            color: whiteColor,
                           ),
                         ),
                       ),

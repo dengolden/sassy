@@ -27,7 +27,9 @@ class ProductItem extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(17),
               image: DecorationImage(
-                image: NetworkImage(product.images[0]),
+                image: NetworkImage(
+                  product.images[0],
+                ),
                 fit: BoxFit.cover,
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sassy/models/product.dart';
 import 'package:sassy/pages/detail_page.dart';
 import 'package:sassy/service/api_service.dart';
@@ -11,6 +12,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productService = Provider.of<ProductService>(context);
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
@@ -177,7 +180,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             FutureBuilder<List<Product>>(
-              future: ProductService.fetchProducts(),
+              future: productService.fetchProducts(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
@@ -185,7 +188,7 @@ class HomePage extends StatelessWidget {
                   String errorMessage = snapshot.error.toString();
                   return Text('Error: $errorMessage');
                 } else {
-                  List<Product> products = snapshot.data!;
+                  List<Product> products = productService.products;
                   return Container(
                     height: 255,
                     child: ListView.builder(
@@ -253,7 +256,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             FutureBuilder<List<Product>>(
-              future: ProductService.fetchProducts(),
+              future: productService.fetchProducts(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
@@ -266,7 +269,7 @@ class HomePage extends StatelessWidget {
                   }
                   return Text('Error: $errorMessage');
                 } else {
-                  List<Product> products = snapshot.data!;
+                  List<Product> products = productService.products;
                   return Container(
                     height: 255,
                     child: ListView.builder(
