@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
                         'Shop now',
                         style: semiBoldTextStyle.copyWith(
                           fontSize: 12,
-                          color: blackColor,
+                          color: whiteColor,
                         ),
                       ),
                     ),
@@ -266,15 +266,17 @@ class HomePage extends StatelessWidget {
                   }
                   return Text('Error: $errorMessage');
                 } else {
-                  List<Product> products = snapshot.data!;
+                  List<Product> products = List.from(snapshot.data!);
+                  products.shuffle();
+                  List<Product> bestSellerProducts = products.take(15).toList();
                   return Container(
                     height: 255,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemCount: products.length,
+                      itemCount: bestSellerProducts.length,
                       itemBuilder: (BuildContext context, int index) {
-                        Product product = products[index];
+                        Product product = bestSellerProducts[index];
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
