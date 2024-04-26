@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sassy/pages/onboarding_page.dart';
+import 'package:sassy/pages/main_page.dart';
 import 'package:sassy/shared/theme.dart';
 
 class SplashPage extends StatefulWidget {
@@ -15,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
     Future.delayed(Duration(milliseconds: 2000), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => OnBoardingPage(),
+          builder: (context) => MainPage(),
         ),
       );
     });

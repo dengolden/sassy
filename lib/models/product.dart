@@ -32,6 +32,7 @@ class Product {
   }
 }
 
+// Nested Object
 class Category {
   final int id;
   final String name;
